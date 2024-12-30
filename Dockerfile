@@ -7,6 +7,9 @@ WORKDIR /app
 # Copiar os arquivos do projeto para o container
 COPY . /app
 
+# Instalar o curl (necessário para o healthcheck)
+RUN apt-get update && apt-get install -y curl
+
 # Instalar as dependências
 RUN npm install
 
