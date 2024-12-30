@@ -5,10 +5,16 @@ const app = express();
 // Middleware to capture the real IP
 app.use((req, res, next) => {
   const forwardedFor = req.headers['x-forwarded-for'];
-  console.log(`use : ${forwardedFor}`)
+
+  console.log(`use: ${forwardedFor}`);
+
+  // Verifica se existe o cabeçalho X-Forwarded-For e pega o último IP na lista
   if (forwardedFor) {
-    req.ip = forwardedFor.split(',')[0];
+    // O forwardedFor é uma string de IPs separados por vírgula. Pegamos o último.
+    const ips = forwardedFor.split(',');
+    req.ip = ips[ips.length - 1].trim();  // Pega o último IP e remove espaços extras
   }
+
   next();
 });
 
@@ -21,8 +27,6 @@ app.use(express.urlencoded({ extended: true }));
 // GET route
 app.get('*', (req, res) => {
   console.log(`GET Request from IP: ${req.ip}, URL: ${req.protocol}://${req.get('host')}${req.originalUrl}`);
-  const forwardedFor = req.headers['x-forwarded-for'];
-  console.log(`use : ${forwardedFor}`)
   res.send('GET request logged');
 });
 
