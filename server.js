@@ -13,8 +13,8 @@ app.use((req, res, next) => {
     // O forwardedFor é uma string de IPs separados por vírgula. Pegamos o último.
     
     const ips = forwardedFor.split(',');
-    req.ip = ips[ips.length - 1].trim();  // Pega o último IP e remove espaços extras
-    console.log(`use: dentro do if, req.ip = ${req.ip}`)
+    req.forwardedIp = ips[ips.length - 1].trim();  // Pega o último IP e remove espaços extras
+    //console.log(`use: dentro do if, req.ip = ${req.ip}`)
   }
 
   next();
@@ -28,13 +28,13 @@ app.use(express.urlencoded({ extended: true }));
 
 // GET route
 app.get('*', (req, res) => {
-  console.log(`GET Request from IP: ${req.ip}, URL: ${req.protocol}://${req.get('host')}${req.originalUrl}`);
+  console.log(`GET Request from IP: ${req.ip}, FORWARDED IP: ${req.forwardedIp}, URL: ${req.protocol}://${req.get('host')}${req.originalUrl}`);
   res.send('GET request logged');
 });
 
 // POST route
 app.post('*', (req, res) => {
-  console.log(`POST Request from IP: ${req.ip}, URL: ${req.protocol}://${req.get('host')}${req.originalUrl}`);
+  console.log(`POST Request from IP: ${req.ip}, FORWARDED IP: ${req.forwardedIp}, URL: ${req.protocol}://${req.get('host')}${req.originalUrl}`);
   res.send('POST request logged');
 });
 
