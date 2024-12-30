@@ -2,6 +2,15 @@ const express = require('express');
 const morgan = require('morgan');
 const app = express();
 
+// Middleware to capture the real IP
+app.use((req, res, next) => {
+  const forwardedFor = req.headers['x-forwarded-for'];
+  if (forwardedFor) {
+    req.ip = forwardedFor.split(',')[0];
+  }
+  next();
+});
+
 // Middleware to log all requisitions
 app.use(morgan(':remote-addr :method :url :status :response-time ms'));
 
