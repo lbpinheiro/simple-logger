@@ -1,0 +1,9 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: simple-logger
+    environment:
+      - NODE_ENV=production
+    restart: always
