@@ -11,8 +11,10 @@ app.use((req, res, next) => {
   // Verifica se existe o cabeçalho X-Forwarded-For e pega o último IP na lista
   if (forwardedFor) {
     // O forwardedFor é uma string de IPs separados por vírgula. Pegamos o último.
+    
     const ips = forwardedFor.split(',');
     req.ip = ips[ips.length - 1].trim();  // Pega o último IP e remove espaços extras
+    console.log(`use: dentro do if, req.ip = ${req.ip}`)
   }
 
   next();
