@@ -21,7 +21,8 @@ app.use(express.urlencoded({ extended: true }));
 // GET route
 app.get('*', (req, res) => {
   console.log(`GET Request from IP: ${req.ip}, URL: ${req.protocol}://${req.get('host')}${req.originalUrl}`);
-  console.log(req)
+  const forwardedFor = req.headers['x-forwarded-for'];
+  console.log(`use : ${forwardedFor}`)
   res.send('GET request logged');
 });
 
