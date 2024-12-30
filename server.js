@@ -1,10 +1,11 @@
 const express = require('express');
-const morgan = require('morgan');
+//const morgan = require('morgan');
 const app = express();
 
 // Middleware to capture the real IP
 app.use((req, res, next) => {
   const forwardedFor = req.headers['x-forwarded-for'];
+  console.log(`use : ${forwardedFor}`)
   if (forwardedFor) {
     req.ip = forwardedFor.split(',')[0];
   }
@@ -12,7 +13,7 @@ app.use((req, res, next) => {
 });
 
 // Middleware to log all requisitions
-app.use(morgan(':remote-addr :method :url :status :response-time ms'));
+//app.use(morgan(':remote-addr :method :url :status :response-time ms'));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -20,6 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 // GET route
 app.get('*', (req, res) => {
   console.log(`GET Request from IP: ${req.ip}, URL: ${req.protocol}://${req.get('host')}${req.originalUrl}`);
+  console.log(req)
   res.send('GET request logged');
 });
 
