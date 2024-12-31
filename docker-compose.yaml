@@ -13,5 +13,5 @@ services:
       retries: 3
       start_period: 10s
       timeout: 5s
-    #labels:
-    #  - "traefik.http.middlewares.app-forwarded-headers.headers.customRequestHeaders.X-Forwarded-For=true"
+    labels:
+      - "traefik.http.middlewares.ip-filter.ipwhitelist.sourcerange=179.127.104.78/32"
