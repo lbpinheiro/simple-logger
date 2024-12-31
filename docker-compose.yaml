@@ -14,4 +14,4 @@ services:
       start_period: 10s
       timeout: 5s
     labels:
-      - "traefik.http.middlewares.ip-filter.ipwhitelist.sourcerange=179.127.104.78/32"
+      - "traefik.http.middlewares.ip-filter.ipwhitelist.sourcerange=${ALLOWED_IP}/32"
